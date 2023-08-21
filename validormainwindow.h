@@ -15,6 +15,9 @@ public:
     ValidorMainWindow(QWidget *parent = nullptr);
     ~ValidorMainWindow();
 
+public slots:
+    void on_sendValuesButton_clicked();
+
 private:
     Ui::ValidorMainWindow *ui;
 };
