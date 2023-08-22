@@ -19,6 +19,9 @@ public slots:
     void on_sendValuesButton_clicked();
 
 private:
+    void pack(uint16_t packet[4]);
+
+private:
     Ui::ValidorMainWindow *ui;
 };
 #endif // VALIDORMAINWINDOW_H
