@@ -23,3 +23,6 @@ build/server/server -p 8000
 build/server/client
 ```
 
+![image-20231222142631778](./img/clientscreen.png)
+
+И отслеживайте сообщения запущенного сервера в консоли. 
