@@ -1,6 +1,7 @@
 #ifndef VALIDORMAINWINDOW_H
 #define VALIDORMAINWINDOW_H
 
+#include "../utils/params.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -19,7 +20,7 @@ public slots:
     void on_sendValuesButton_clicked();
 
 private:
-    void pack(uint16_t packet[4]);
+    void proccessForm(Parameters &params);
 
 private:
     Ui::ValidorMainWindow *ui;

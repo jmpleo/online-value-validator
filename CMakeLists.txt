@@ -1,58 +1,25 @@
 cmake_minimum_required(VERSION 3.5)
+project(online-value-validator)
 
-project(online-validator VERSION 0.1 LANGUAGES CXX)
+list(APPEND CMAKE_PREFIX_PATH "/usr")
+list(APPEND CMAKE_PREFIX_PATH "/usr/lib")
+list(APPEND CMAKE_PREFIX_PATH "/usr/lib/x86_64-linux-gnu/")
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
+set(Boost_USE_STATIC_LIBS OFF)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(CMAKE_CXX_STANDARD 17)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
-
-set(PROJECT_SOURCES
-        main.cpp
-        validormainwindow.cpp
-        validormainwindow.h
-        validormainwindow.ui
-)
-
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(online-validator
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
+find_library(params_LIBRARIES
+    NAMES params
+    PATHS ${PROJECT_DIR}/lib
     )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET online-validator APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-else()
-    if(ANDROID)
-        add_library(online-validator SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(online-validator
-            ${PROJECT_SOURCES}
-        )
-    endif()
-endif()
 
-target_link_libraries(online-validator PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-
-set_target_properties(online-validator PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-)
-
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(online-validator)
-endif()
+add_subdirectory(utils)
+add_subdirectory(server)
+add_subdirectory(client)
